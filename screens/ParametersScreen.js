@@ -3,9 +3,9 @@ import { View, Text, StyleSheet, StatusBar, TouchableOpacity } from "react-nativ
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default function ParametersScreen({ navigation }) {
-  const changeLanguage = (language) => {
-    console.log(`Langue changée en ${language}`);
-  };
+  // const changeLanguage = (language) => {
+  //   console.log(`Langue changée en ${language}`);
+  // };
 
   return (
     <View style={styles.container}>
