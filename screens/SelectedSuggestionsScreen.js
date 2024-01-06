@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import {
   View,
@@ -13,9 +13,13 @@ import {
 } from "react-native";
 // import BackButton from "../components/BackButton";
 import { CustomText } from "../components/CustomText";
+import { useSelector, useDispatch } from "react-redux";
+
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import moment from "moment";
 import GradientFontColor from "../components/GradientFontColor";
+import toggleBookmarkTrip from "../modules/bookmarkTrip";
+import { toggleBookmark } from "../reducers/userInfo";
 
 const colors = {
   black: "#515151",
@@ -26,8 +30,10 @@ const colors = {
 
 export default function SelectedSuggestionsScreen({ navigation, route }) {
   const { width } = useWindowDimensions();
-  const trip = route.params.trip;
-  const { img } = route.params;
+  const { trip, img, tripIndex, isBookmarked } = route.params;
+  const userInfo = useSelector((state) => state.userInfo.value);
+  const dispatch = useDispatch();
+
   const outboundJourneyType = trip.outboundJourney.type;
   const inboundJourneyType = trip.inboundJourney.type;
   const totalPaidAmount = trip.total;
@@ -35,7 +41,7 @@ export default function SelectedSuggestionsScreen({ navigation, route }) {
   const iconMapping = {
     Train: "train",
     Airplane: "plane",
-    Coach: "bus",
+   Autocar: "bus",
   };
   const iconOutbound = iconMapping[outboundJourneyType] || "defaultIconName";
   const iconInbound = iconMapping[inboundJourneyType] || "defaultIconName";
@@ -86,6 +92,17 @@ export default function SelectedSuggestionsScreen({ navigation, route }) {
   const handleContinueToPaymentPress = () => {
     navigation.navigate("PaymentHomeStack");
   };
+  const handlePress = async () => {
+    const result = await toggleBookmarkTrip(
+      tripIndex,
+      userInfo.isConnected,
+      userInfo.token
+    );
+    if (!result) {
+      return;
+    }
+    dispatch(toggleBookmark(tripIndex));
+  };
 
   return (
     <ScrollView contentContainerStyle={styles.scrollViewContent}>
@@ -93,12 +110,18 @@ export default function SelectedSuggestionsScreen({ navigation, route }) {
 
       <ImageBackground source={img} style={styles.imageBackground}>
         <View style={styles.overlay} />
-
         <View style={[styles.cityImgContainer, { width: width }]}>
           <CustomText style={styles.destinationTitle}>
             {trip.destination.name} - {trip.destination.country}
           </CustomText>
         </View>
+        <FontAwesome
+          style={styles.bookmark}
+          name="bookmark"
+          size={30}
+          color={userInfo.bookmarked[tripIndex] ? colors.purple : "white"}
+          onPress={() => handlePress()}
+        />
       </ImageBackground>
       <View style={styles.priceContainer}>
         <CustomText style={styles.text}>
@@ -260,6 +283,12 @@ const styles = StyleSheet.create({
   overlay: {
     ...StyleSheet.absoluteFillObject,
     backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+  bookmark: {
+    position: "absolute",
+    zIndex: 1,
+    right: 20,
+    bottom: 20,
   },
   cityImgContainer: {
     height: 200,

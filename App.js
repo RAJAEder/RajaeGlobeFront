@@ -24,6 +24,7 @@ import { persistStore, persistReducer } from "redux-persist";
 const persistConfig = {
   key: "root",
   storage: AsyncStorage,
+  // blacklist: ["userInfo"],
 };
 
 const rootReducer = combineReducers({ filters, userInfo });
@@ -136,6 +137,7 @@ const TabNavigator = () => {
 };
 
 export default function App() {
+  // AsyncStorage.clear();
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>

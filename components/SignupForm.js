@@ -51,23 +51,24 @@ export default function SignupForm({ submit, closeModal }) {
         confirmPassword,
       ])
     ) {
-      return Alert.alert("Some fields are missing!");
+      return Alert.alert("Some fiiiields are missing!");
     }
     if (!EMAIL_REGEX.test(email)) {
-      return Alert.alert("Wrong email adress");
+      return Alert.alert("Wrong email adress or");
     }
     if (password !== confirmPassword) {
       return Alert.alert("Password doesn't match!");
     }
     if (password.length < 5) {
-      return Alert.alert("Some fields are missing!");
+      return Alert.alert("password must be > = 5 caracters ");
     }
-    const response = await submit(firstname, lastname, email, password);
     //console.log(response);
+    const response = await submit(firstname, lastname, email, password);
     if (!response.result) {
-      return Alert.alert("Some fields are missing!");
+      return Alert.alert(response.error);
     }
   };
+
 
   return (
     <SafeAreaView style={styles.container}>
@@ -86,6 +87,7 @@ export default function SignupForm({ submit, closeModal }) {
         <KeyboardAvoidingView
           enabled={true}
           behavior={Platform.OS === "ios" ? "padding" : "height"}
+          style={[{ width: width }]}
         >
           <View style={styles.inputsContainerRow}>
             <View style={styles.textAndInput}>
@@ -168,10 +170,11 @@ const styles = StyleSheet.create({
   container: {
     alignItems: "center",
     backgroundColor: "white",
-    flex: 1,
+    width: "100%",
   },
   scrollView: {
     alignItems: "center",
+    flex: 1,
   },
 
   titleContainer: {
@@ -198,15 +201,15 @@ const styles = StyleSheet.create({
     marginVertical: 20,
     justifyContent: "center",
     alignItems: "center",
-    flexWrap: "wrap",
   },
   textAndInput: {
-    width: "100%",
+    width: "600%",
     justifyContent: "center",
     alignItems: "center",
     marginBottom: 10,
   },
   textInput: {
+    width: "10%",
     fontSize: 16,
     borderBottomColor: "#BA99FE",
     borderBottomWidth: 2,

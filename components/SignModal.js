@@ -28,7 +28,7 @@ const SignModal = ({ onClose, onSignIn, onSignUp, closeSignModal }) => {
         <TouchableOpacity style={styles.button} onPress={onSignIn}>
           <CustomText style={styles.buttonText}>Sign In</CustomText>
         </TouchableOpacity>
-        <View style={{ alignItems: "center", marginTop: 150 }}>
+        <View style={{ alignItems: "center", marginTop: 50 }}>
           <CustomText style={{ fontSize: 18 }}>
             Don't have an account ?
           </CustomText>
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flex: 1,
-    marginVertical: 100,
+    marginVertical: 20,
   },
   button: {
     marginVertical: 10,
@@ -93,16 +93,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   closeButton: {
-    // width: 40,
-    // height: 40,
-    // right: 10,
-    // top: 15,
-    // marginTop: -15,
-    // marginRight: -10,
-    // position: "absolute",
-    // justifyContent: "center",
-    // alignItems: "center",
-
     width: 40,
     height: 40,
     right: 10,

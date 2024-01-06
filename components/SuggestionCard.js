@@ -10,6 +10,7 @@ import {
 import { CustomText } from "./CustomText";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 
+
 export default function SuggestionCard({
   tripIndex,
   cityName,
@@ -22,13 +23,16 @@ export default function SuggestionCard({
   returnTransportType,
   accommodationType,
   selectTrip,
-  toggleBookmarkTrip,
+  bookmarkTrip,
   isBookmarked,
 }) {
-  handleBookmarkPress = () => {
-    toggleBookmarkTrip(tripIndex);
+
+  const handleBookmarkClick = () => {
+    bookmarkTrip(tripIndex);
   };
 
+  
+  // console.log("hhh", isBookmarked);
   return (
     <TouchableOpacity
       style={styles.container}
@@ -38,9 +42,11 @@ export default function SuggestionCard({
         <FontAwesome
           style={styles.bookmark}
           name="bookmark"
-          size={20}
-          color={isBookmarked ? "#EDB8FE" : "white"}
-          onPress={handleBookmarkPress}
+          size={30}
+          color={isBookmarked ? "#BA99FE" : "white"}
+          onPress={handleBookmarkClick}
+
+         // onPress={() => bookmarkTrip(tripIndex)}
         />
         <CustomText
           style={{
@@ -54,7 +60,6 @@ export default function SuggestionCard({
         </CustomText>
         <Image source={img} style={styles.cityImg} />
         <View style={styles.overlay} />
-        {/* <ImageBackground source={img} style={{width: 200,height: 100}} imageStyle={{ resizeMode: 'cover' }} overlayColor='#00000088'></ImageBackground> */}
       </View>
       <View style={styles.infosContainer}>
         <View style={styles.activitiesContainer}>
